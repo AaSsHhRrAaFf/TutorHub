@@ -4,6 +4,8 @@ import Home from '../pages/Home'
 import ErrorPage from '../pages/ErrorPage'
 import Login from '../pages/Login'
 import Register from '../pages/Register'
+import React from 'react';
+
 
 const router = createBrowserRouter([
   {
@@ -27,4 +29,4 @@ const router = createBrowserRouter([
   }
 ])
 
-export default router
+export default router;
