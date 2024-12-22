@@ -1,0 +1,28 @@
+{
+  "name": "my-tutor-booking-app",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "autoprefixer": "^10.4.20",
+    "axios": "^1.7.9",
+    "daisyui": "^4.12.22",
+    "firebase": "^11.1.0",
+    "postcss": "^8.4.49",
+    "react-hook-form": "^7.54.2",
+    "react-hot-toast": "^2.4.1",
+    "react-icons": "^5.4.0",
+    "react-router-dom": "^7.1.0",
+    "tailwindcss": "^3.4.17",
+    "vue": "^3.5.13"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.1",
+    "vite": "^6.0.3"
+  }
+}
