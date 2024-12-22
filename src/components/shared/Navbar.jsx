@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import { useAuth } from "../../hooks/useAuth";
 
 export default function Navbar() {
-  const { user, logout } = useAuth(); 
+  const { user, logout } = useAuth();
 
   // Handle logout
   const handleLogout = async () => {
@@ -48,7 +48,7 @@ export default function Navbar() {
               <li>
                 <Link to="/find-tutors">Find tutors</Link>
               </li>
-              {user && ( 
+              {user && (
                 <>
                   <li>
                     <Link to="/add-tutorials">Add Tutorials</Link>
@@ -75,7 +75,7 @@ export default function Navbar() {
             <li>
               <Link to="/find-tutors">Find tutors</Link>
             </li>
-            {user && ( 
+            {user && (
               <>
                 <li>
                   <Link to="/add-tutorials">Add Tutorials</Link>
@@ -91,18 +91,31 @@ export default function Navbar() {
           </ul>
         </div>
         <div className="navbar-end">
-          {!user ? ( 
-            <Link to="/login" className="btn btn-primary">
-              Login
-            </Link>
+          {!user ? (
+            <Link 
+            to="/login" 
+            className="
+              inline-block
+              text-lg font-semibold text-white
+              px-6 py-3
+              bg-gradient-to-r from-blue-500 to-indigo-600
+              hover:from-blue-600 hover:to-indigo-700
+              rounded-full
+              shadow-md hover:shadow-lg
+              transform hover:-translate-y-0.5
+              transition duration-300 ease-in-out
+              focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50
+            "
+          >
+            Login
+          </Link>
           ) : (
-           
             <div className="dropdown dropdown-end">
               <div
                 tabIndex={0}
                 role="button"
                 className="btn btn-ghost btn-circle avatar tooltip tooltip-bottom"
-                data-tip={user.displayName} 
+                data-tip={user.displayName}
               >
                 <div className="w-10 rounded-full">
                   <img
@@ -116,11 +129,24 @@ export default function Navbar() {
                 className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
               >
                 <li className="text-gray-500 px-4 py-2 text-sm">
-                  {user.displayName} 
+                  {user.displayName}
                 </li>
                 <div className="divider my-0"></div>
                 <li>
-                  <button onClick={handleLogout} className="text-red-500">
+                  <button
+                    onClick={handleLogout}
+                    className="
+    text-white font-semibold
+    px-4 py-2
+    bg-gradient-to-r from-red-500 to-red-600
+    hover:from-red-600 hover:to-red-700
+    rounded-lg
+    shadow-md hover:shadow-lg
+    transform hover:-translate-y-0.5
+    transition duration-300 ease-in-out
+    focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50
+  "
+                  >
                     Logout
                   </button>
                 </li>
