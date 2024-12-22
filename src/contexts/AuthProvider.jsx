@@ -23,7 +23,19 @@ export default function AuthProvider({ children }) {
     setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
-
+  const signup = async (email, password, name, photoURL) => {
+    setLoading(true);
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      await updateProfile(userCredential.user, {
+        displayName: name,
+        photoURL: photoURL
+      });
+      return userCredential;
+    } finally {
+      setLoading(false);
+    }
+  };
   // Sign in with Google
   const signInWithGoogle = () => {
     setLoading(true);
@@ -50,6 +62,7 @@ export default function AuthProvider({ children }) {
     user,
     loading,
     signIn,
+    signup,
     signInWithGoogle,
     logout,
   };
