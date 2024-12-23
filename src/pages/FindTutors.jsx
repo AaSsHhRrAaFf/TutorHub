@@ -49,7 +49,7 @@ export default function FindTutors() {
       </div>
     );
   }
-console.log(tutors);
+
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -97,7 +97,7 @@ console.log(tutors);
               </div>
 
               <Link
-                to={`/tutor/${tutor._id}`}
+               to={`/tutor/${tutor._id}`}
                 className="
                   block w-full text-center
                   bg-gradient-to-r from-blue-500 to-indigo-600
