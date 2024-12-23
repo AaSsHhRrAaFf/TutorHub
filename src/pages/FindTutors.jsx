@@ -1,14 +1,17 @@
+import React from 'react'
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
-import { FaStar } from 'react-icons/fa';
-import React from 'react'
+import { FaStar, FaSearch } from 'react-icons/fa'; 
 import Loading from '../components/shared/Loading';
+
 export default function FindTutors() {
   const { category } = useParams();
   const [tutors, setTutors] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredTutors, setFilteredTutors] = useState([]);
 
   useEffect(() => {
     const fetchTutors = async () => {
@@ -16,12 +19,13 @@ export default function FindTutors() {
         setLoading(true);
         setError(null);
         const url = category 
-        ? `http://localhost:5000/api/tutors/${category}`  // Add your backend URL
-        : 'http://localhost:5000/api/tutors'; 
+          ? `http://localhost:5000/api/tutors/${category}`
+          : 'http://localhost:5000/api/tutors';
         const response = await axios.get(url);
-        // Check if response.data is an array
+        
         if (Array.isArray(response.data)) {
           setTutors(response.data);
+          setFilteredTutors(response.data); 
         } else {
           throw new Error('Data received is not in the expected format');
         }
@@ -36,6 +40,16 @@ export default function FindTutors() {
     fetchTutors();
   }, [category]);
 
+  const handleSearch = (e) => {
+    const term = e.target.value.toLowerCase();
+    setSearchTerm(term);
+
+    const filtered = tutors.filter(tutor =>
+      tutor.language.toLowerCase().includes(term)
+    );
+    setFilteredTutors(filtered);
+  };
+
   if (loading) return <Loading />;
 
   if (error) {
@@ -46,7 +60,6 @@ export default function FindTutors() {
     );
   }
 
-
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-8 text-center">
@@ -55,8 +68,27 @@ export default function FindTutors() {
           : 'All Tutors'}
       </h1>
 
+      {/* Add Search Bar */}
+      <div className="max-w-md mx-auto mb-8">
+        <div className="relative">
+          <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+          <input
+            type="text"
+            placeholder="Search by language..."
+            value={searchTerm}
+            onChange={handleSearch}
+            className="
+              w-full pl-10 pr-4 py-2
+              border border-gray-300 rounded-lg
+              focus:outline-none focus:ring-2 focus:ring-blue-500
+              transition duration-300
+            "
+          />
+        </div>
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {tutors.map((tutor) => (
+        {filteredTutors.map((tutor) => (
           <div 
             key={tutor._id} 
             className="
@@ -93,7 +125,7 @@ export default function FindTutors() {
               </div>
 
               <Link
-               to={`/tutor/${tutor._id}`}
+                to={`/tutor/${tutor._id}`}
                 className="
                   block w-full text-center
                   bg-gradient-to-r from-blue-500 to-indigo-600
@@ -110,9 +142,11 @@ export default function FindTutors() {
         ))}
       </div>
 
-      {(!tutors || tutors.length === 0) && (
+      {(!filteredTutors || filteredTutors.length === 0) && (
         <div className="text-center text-gray-500 py-8">
-          No tutors found for this category.
+          {searchTerm 
+            ? `No tutors found for "${searchTerm}"`
+            : 'No tutors found for this category.'}
         </div>
       )}
     </div>
