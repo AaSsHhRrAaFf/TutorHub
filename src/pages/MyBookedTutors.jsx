@@ -1,10 +1,11 @@
-import React from 'react'
+import React from "react";
 
-import { useState, useEffect } from 'react';
-import { useAuth } from '../hooks/useAuth';
-import axios from 'axios';
-import toast from 'react-hot-toast';
-import { FaStar } from 'react-icons/fa';
+import { useState, useEffect } from "react";
+import { useAuth } from "../hooks/useAuth";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { FaStar } from "react-icons/fa";
+import Loading from "../components/shared/Loading";
 
 export default function MyBookedTutors() {
   const [bookedTutors, setBookedTutors] = useState([]);
@@ -14,13 +15,14 @@ export default function MyBookedTutors() {
   useEffect(() => {
     const fetchBookedTutors = async () => {
       try {
+        setLoading(true);
         const response = await axios.get(
           `http://localhost:5000/api/bookings/${user.email}`
         );
         setBookedTutors(response.data);
       } catch (error) {
-        toast.error('Failed to fetch booked tutors');
-        console.error('Error:', error);
+        toast.error("Failed to fetch booked tutors");
+        console.error("Error:", error);
       } finally {
         setLoading(false);
       }
@@ -32,31 +34,30 @@ export default function MyBookedTutors() {
   // Handle review submission
   const handleReview = async (tutorId) => {
     try {
+      setLoading(true);
       // Update review count in the database
       await axios.put(`http://localhost:5000/api/tutors/review/${tutorId}`);
-      
+
       // Update the local state to reflect the change
-      setBookedTutors(bookedTutors.map(tutor => {
-        if (tutor.tutorId === tutorId) {
-          return { ...tutor, review: (tutor.review || 0) + 1 };
-        }
-        return tutor;
-      }));
-      
-      toast.success('Review submitted successfully!');
+      setBookedTutors(
+        bookedTutors.map((tutor) => {
+          if (tutor.tutorId === tutorId) {
+            return { ...tutor, review: (tutor.review || 0) + 1 };
+          }
+          return tutor;
+        })
+      );
+
+      toast.success("Review submitted successfully!");
     } catch (error) {
-      toast.error('Failed to submit review');
-      console.error('Error:', error);
+      toast.error("Failed to submit review");
+      console.error("Error:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center min-h-screen">
-        <span className="loading loading-spinner loading-lg"></span>
-      </div>
-    );
-  }
+  if (loading) return <Loading />;
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -86,7 +87,7 @@ export default function MyBookedTutors() {
 
               <div className="p-6">
                 <h2 className="text-xl font-semibold mb-2">{tutor.name}</h2>
-                
+
                 <div className="flex items-center mb-3">
                   <span className="text-gray-600 mr-2">Language:</span>
                   <span className="font-medium">{tutor.language}</span>
@@ -119,4 +120,3 @@ export default function MyBookedTutors() {
     </div>
   );
 }
-

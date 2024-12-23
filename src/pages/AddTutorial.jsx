@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import Loading from '../components/shared/Loading';
 
 export default function AddTutorial() {
   const { user } = useAuth();
@@ -46,7 +47,7 @@ export default function AddTutorial() {
       setLoading(false);
     }
   };
-
+  if (loading) return <Loading />;
   return (
     <div className="max-w-2xl mx-auto p-6">
       <h2 className="text-3xl font-bold text-center mb-8">Add New Tutorial</h2>

@@ -1,63 +1,88 @@
-import React from "react";
-import { useState, useEffect } from "react";
-import { useAuth } from "../hooks/useAuth";
-import axios from "axios";
-import toast from "react-hot-toast";
-import UpdateModal from "../components/dashboard/UpdateModal";
+import React from "react";import { useState, useEffect } from 'react';
+import { useAuth } from '../hooks/useAuth';
+import axios from 'axios';
+import toast from 'react-hot-toast';
+import Loading from "../components/shared/Loading";
 
 export default function MyTutorials() {
-  const [tutorials, setTutorials] = useState([]);
-  const [selectedTutorial, setSelectedTutorial] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const { user } = useAuth();
-  // Fetch tutorials for the logged-in user
+  const [tutorials, setTutorials] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedTutorial, setSelectedTutorial] = useState(null);
+  const [updateForm, setUpdateForm] = useState({
+    image: '',
+    language: '',
+    price: '',
+    description: ''
+  });
+
+  // Fetch tutorials
   useEffect(() => {
     const fetchTutorials = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5001/api/tutorials/my-tutorials?email=${user.email}`
-        );
+        setLoading(true);
+        const response = await axios.get(`http://localhost:5000/api/tutorials/my-tutorials/${user.email}`);
         setTutorials(response.data);
       } catch (error) {
-        toast.error("Failed to fetch tutorials");
+        toast.error('Failed to fetch tutorials');
+      } finally {
+        setLoading(false);
       }
     };
 
-    if (user?.email) {
-      fetchTutorials();
-    }
-  }, [user]);
+    fetchTutorials();
+  }, [user.email]);
 
-  // Delete handler
+  // Handle delete
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5001/api/tutorials/${id}`);
-      // Update UI by removing the deleted tutorial
-      setTutorials(tutorials.filter((tutorial) => tutorial._id !== id));
-      toast.success("Tutorial deleted successfully");
+      await axios.delete(`http://localhost:5000/api/tutorials/${id}`);
+      setTutorials(tutorials.filter(tutorial => tutorial._id !== id));
+      toast.success('Tutorial deleted successfully');
     } catch (error) {
-      toast.error("Failed to delete tutorial");
+      toast.error('Failed to delete tutorial');
     }
   };
 
-  // Function to handle update button click
-  const handleUpdateClick = (tutorial) => {
+  // Handle update modal
+  const openUpdateModal = (tutorial) => {
     setSelectedTutorial(tutorial);
+    setUpdateForm({
+      image: tutorial.image,
+      language: tutorial.language,
+      price: tutorial.price,
+      description: tutorial.description
+    });
     setIsModalOpen(true);
   };
-  // Function to handle successful update
-  const handleUpdate = (updatedTutorial) => {
-    setTutorials(
-      tutorials.map((tutorial) =>
-        tutorial._id === updatedTutorial._id ? updatedTutorial : tutorial
-      )
-    );
+
+  // Handle update
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.put(
+        `http://localhost:5000/api/tutorials/${selectedTutorial._id}`,
+        updateForm
+      );
+      
+      setTutorials(tutorials.map(tutorial => 
+        tutorial._id === selectedTutorial._id ? response.data : tutorial
+      ));
+      
+      setIsModalOpen(false);
+      toast.success('Tutorial updated successfully');
+    } catch (error) {
+      toast.error('Failed to update tutorial');
+    }
   };
 
+  if (loading) return <Loading />;
   return (
-    <div className="container mx-auto p-4">
-      <h2 className="text-2xl font-bold mb-4">My Tutorials</h2>
-
+    <div className="container mx-auto px-4 py-8">
+      <h2 className="text-2xl font-bold mb-6">My Tutorials</h2>
+      
+      {/* Tutorials Table */}
       <div className="overflow-x-auto">
         <table className="table w-full">
           <thead>
@@ -75,8 +100,8 @@ export default function MyTutorials() {
             {tutorials.map((tutorial) => (
               <tr key={tutorial._id}>
                 <td>
-                  <img
-                    src={tutorial.image}
+                  <img 
+                    src={tutorial.image} 
                     alt={tutorial.name}
                     className="w-16 h-16 object-cover rounded"
                   />
@@ -88,7 +113,7 @@ export default function MyTutorials() {
                 <td>{tutorial.review}</td>
                 <td className="space-x-2">
                   <button
-                    onClick={() => handleUpdateClick(tutorial)}
+                    onClick={() => openUpdateModal(tutorial)}
                     className="btn btn-sm btn-primary"
                   >
                     Update
@@ -106,17 +131,92 @@ export default function MyTutorials() {
         </table>
       </div>
 
-       {/* Update Modal */}
-       {isModalOpen && selectedTutorial && (
-        <UpdateModal
-          tutorial={selectedTutorial}
-          isOpen={isModalOpen}
-          onClose={() => {
-            setIsModalOpen(false);
-            setSelectedTutorial(null);
-          }}
-          onUpdate={handleUpdate}
-        />
+      {/* Update Modal */}
+      {isModalOpen && selectedTutorial && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-lg p-6 w-full max-w-md">
+            <h3 className="text-lg font-bold mb-4">Update Tutorial</h3>
+            <form onSubmit={handleUpdate}>
+              {/* Non-editable fields */}
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700">Name</label>
+                <input
+                  type="text"
+                  value={selectedTutorial.name}
+                  disabled
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-100"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700">Email</label>
+                <input
+                  type="email"
+                  value={selectedTutorial.email}
+                  disabled
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-100"
+                />
+              </div>
+
+              {/* Editable fields */}
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700">Image URL</label>
+                <input
+                  type="url"
+                  value={updateForm.image}
+                  onChange={(e) => setUpdateForm({...updateForm, image: e.target.value})}
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700">Language</label>
+                <input
+                  type="text"
+                  value={updateForm.language}
+                  onChange={(e) => setUpdateForm({...updateForm, language: e.target.value})}
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700">Price</label>
+                <input
+                  type="number"
+                  value={updateForm.price}
+                  onChange={(e) => setUpdateForm({...updateForm, price: e.target.value})}
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700">Description</label>
+                <textarea
+                  value={updateForm.description}
+                  onChange={(e) => setUpdateForm({...updateForm, description: e.target.value})}
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                  rows="3"
+                  required
+                />
+              </div>
+
+              <div className="flex justify-end space-x-2">
+                <button
+                  type="button"
+                  onClick={() => setIsModalOpen(false)}
+                  className="btn btn-ghost"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                >
+                  Update
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
       )}
     </div>
   );

@@ -1,15 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import {
-  FaFlagUsa, // USA flag for English
-  FaFlagCheckered, // Spanish flag
-  FaWineGlassAlt, // French culture
-  FaBeer, // German culture
-  FaPizzaSlice, // Italian culture
-  FaYenSign, // Japanese currency/culture
-  FaPagelines, // Arabic calligraphy style
-  FaYinYang, // Chinese culture
-  FaSun, // Portuguese/Brazil culture
+  FaFlagUsa, 
+  FaFlagCheckered, 
+  FaWineGlassAlt, 
+  FaBeer, 
+  FaPizzaSlice, 
+  FaYenSign, 
+  FaPagelines, 
+  FaYinYang, 
+  FaSun, 
   FaArrowRight,
 } from "react-icons/fa";
 import English from "../../assets/icons8-english-48.png";
@@ -78,7 +78,9 @@ const categories = [
   },
 ];
 
+
 export default function LanguageCategories() {
+  
   return (
     <section className="w-full py-12 bg-gray-50">
       <div className="container mx-auto px-4">

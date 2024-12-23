@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { FaStar } from 'react-icons/fa';
 import React from 'react'
+import Loading from '../components/shared/Loading';
 export default function FindTutors() {
   const { category } = useParams();
   const [tutors, setTutors] = useState([]);
@@ -13,6 +14,7 @@ export default function FindTutors() {
     const fetchTutors = async () => {
       try {
         setLoading(true);
+        setError(null);
         const url = category 
         ? `http://localhost:5000/api/tutors/${category}`  // Add your backend URL
         : 'http://localhost:5000/api/tutors'; 
@@ -34,13 +36,7 @@ export default function FindTutors() {
     fetchTutors();
   }, [category]);
 
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center min-h-[400px]">
-        <span className="loading loading-spinner loading-lg"></span>
-      </div>
-    );
-  }
+  if (loading) return <Loading />;
 
   if (error) {
     return (

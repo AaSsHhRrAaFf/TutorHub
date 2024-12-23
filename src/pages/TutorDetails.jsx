@@ -4,6 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import Loading from '../components/shared/Loading';
 
 export default function TutorDetails() {
   const { id } = useParams();
@@ -16,6 +17,7 @@ export default function TutorDetails() {
   useEffect(() => {
     const fetchTutorDetails = async () => {
       try {
+        setLoading(true);
         const response = await axios.get(`http://localhost:5000/api/tutors/details/${id}`);
       
         setTutor(response.data);
@@ -50,13 +52,7 @@ export default function TutorDetails() {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center min-h-screen">
-        <span className="loading loading-spinner loading-lg"></span>
-      </div>
-    );
-  }
+  if (loading) return <Loading />;
 
   if (error) {
     return (
