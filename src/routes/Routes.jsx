@@ -10,6 +10,7 @@ import PrivateRoute from './PrivateRoute';
 import AddTutorial from '../pages/AddTutorial';
 import MyTutorials from '../pages/MyTutorials'
 import TutorDetails from '../pages/TutorDetails'
+import MyBookedTutors from '../pages/MyBookedTutors'
 
 
 const router = createBrowserRouter([
@@ -59,6 +60,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <TutorDetails />
+          </PrivateRoute>
+        )
+      },
+      {
+        path: '/my-booked-tutors',
+        element: (
+          <PrivateRoute>
+            <MyBookedTutors />
           </PrivateRoute>
         )
       }
