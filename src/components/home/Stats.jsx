@@ -4,6 +4,7 @@ import { FaChalkboardTeacher, FaStar, FaLanguage, FaUsers } from 'react-icons/fa
 import axios from 'axios';
 import Loading from '../shared/Loading';
 
+
 const Stats = ({ theme = 'light' }) => { 
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);

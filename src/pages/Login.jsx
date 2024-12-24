@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../hooks/useAuth'; // We'll create this hook
+import { useAuth } from '../hooks/useAuth'; 
 import toast from 'react-hot-toast';
-import { FcGoogle } from 'react-icons/fc'; // Google icon
+import { FcGoogle } from 'react-icons/fc'; 
 import React from 'react'
 
 export default function Login() {
@@ -16,7 +16,7 @@ export default function Login() {
     try {
       await signIn(email, password);
       toast.success('Successfully logged in!');
-      navigate('/'); // Redirect to home page after login
+      navigate('/'); 
     } catch (error) {
       toast.error(error.message);
     }
