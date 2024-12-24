@@ -1,11 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import { useTheme } from "../../contexts/ThemeProvider";
+import { FaSun, FaMoon } from "react-icons/fa";
 import toast from "react-hot-toast";
 import { useAuth } from "../../hooks/useAuth";
 
 export default function Navbar() {
   const { user, logout } = useAuth();
+  const { theme, toggleTheme } = useTheme();
 
   // Handle logout
   const handleLogout = async () => {
@@ -91,10 +93,22 @@ export default function Navbar() {
           </ul>
         </div>
         <div className="navbar-end">
+          {/* Theme Toggle Button */}
+          <button
+            onClick={toggleTheme}
+            className="btn btn-ghost btn-circle mr-3"
+            aria-label="Toggle theme"
+          >
+            {theme === "light" ? (
+              <FaMoon className="h-5 w-5" />
+            ) : (
+              <FaSun className="h-5 w-5" />
+            )}
+          </button>
           {!user ? (
-            <Link 
-            to="/login" 
-            className="
+            <Link
+              to="/login"
+              className="
               inline-block
               text-lg font-semibold text-white
               px-6 py-3
@@ -106,9 +120,9 @@ export default function Navbar() {
               transition duration-300 ease-in-out
               focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50
             "
-          >
-            Login
-          </Link>
+            >
+              Login
+            </Link>
           ) : (
             <div className="dropdown dropdown-end">
               <div

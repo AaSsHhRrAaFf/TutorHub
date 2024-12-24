@@ -6,7 +6,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { FaStar } from "react-icons/fa";
 import Loading from "../components/shared/Loading";
-
+import axiosSecure from '../utils/axios'; 
 export default function MyBookedTutors() {
   const [bookedTutors, setBookedTutors] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -16,7 +16,7 @@ export default function MyBookedTutors() {
     const fetchBookedTutors = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(
+        const response = await axiosSecure.get(
           `http://localhost:5000/api/bookings/${user.email}`
         );
         setBookedTutors(response.data);
@@ -36,7 +36,7 @@ export default function MyBookedTutors() {
     try {
       setLoading(true);
       // Update review count in the database
-      await axios.put(`http://localhost:5000/api/tutors/review/${tutorId}`);
+      await axiosSecure.put(`http://localhost:5000/api/tutors/review/${tutorId}`);
 
       // Update the local state to reflect the change
       setBookedTutors(

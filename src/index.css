@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+    transition: all 0.3s ease;
+  }
+  
+  [data-theme="dark"] {
+    transition: all 0.3s ease;
+  }
+  
+  .navbar,
+  .btn,
+  .card,
+  .dropdown-content {
+    transition: all 0.3s ease;
+  }
+  

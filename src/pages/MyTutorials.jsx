@@ -3,6 +3,7 @@ import { useAuth } from '../hooks/useAuth';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import Loading from "../components/shared/Loading";
+import axiosSecure from '../utils/axios'; 
 
 export default function MyTutorials() {
   const { user } = useAuth();
@@ -22,7 +23,7 @@ export default function MyTutorials() {
     const fetchTutorials = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`http://localhost:5000/api/tutorials/my-tutorials/${user.email}`);
+        const response = await axiosSecure.get(`http://localhost:5000/api/tutorials/my-tutorials/${user.email}`);
         setTutorials(response.data);
       } catch (error) {
         toast.error('Failed to fetch tutorials');
@@ -37,7 +38,7 @@ export default function MyTutorials() {
   // Handle delete
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/tutorials/${id}`);
+      await axiosSecure.delete(`http://localhost:5000/api/tutorials/${id}`);
       setTutorials(tutorials.filter(tutorial => tutorial._id !== id));
       toast.success('Tutorial deleted successfully');
     } catch (error) {
@@ -61,7 +62,7 @@ export default function MyTutorials() {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.put(
+      const response = await axiosSecure.put(
         `http://localhost:5000/api/tutorials/${selectedTutorial._id}`,
         updateForm
       );

@@ -4,6 +4,7 @@ import { useAuth } from '../hooks/useAuth';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import Loading from '../components/shared/Loading';
+import axiosSecure from '../utils/axios'; 
 
 export default function AddTutorial() {
   const { user } = useAuth();

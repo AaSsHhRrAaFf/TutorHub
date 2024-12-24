@@ -5,6 +5,7 @@ import { useAuth } from '../hooks/useAuth';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import Loading from '../components/shared/Loading';
+import axiosSecure from '../utils/axios'; 
 
 export default function TutorDetails() {
   const { id } = useParams();
@@ -18,7 +19,7 @@ export default function TutorDetails() {
     const fetchTutorDetails = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`http://localhost:5000/api/tutors/details/${id}`);
+        const response = await axiosSecure.get(`http://localhost:5000/api/tutors/details/${id}`);
       
         setTutor(response.data);
       } catch (err) {
@@ -43,7 +44,7 @@ export default function TutorDetails() {
         email: user.email 
       };
 
-      await axios.post('http://localhost:5000/api/bookings', bookingData);
+      await axiosSecure.post('http://localhost:5000/api/bookings', bookingData);
       toast.success('Booking successful!');
       navigate('/my-booked-tutors');
     } catch (error) {
