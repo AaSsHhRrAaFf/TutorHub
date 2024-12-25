@@ -1,18 +1,20 @@
 
 import axios from 'axios';
 
-const instance = axios.create({
-  baseURL: 'http://localhost:5000',
-  withCredentials: true
+const axiosSecure = axios.create({
+  baseURL: import.meta.env.VITE_API_BASE_URL,
+  withCredentials: true,
+ 
 });
 
 
-instance.interceptors.request.use(
+axiosSecure.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('access-token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+    config.url = config.url.replace(/([^:]\/)\/+/g, "$1");
     return config;
   },
   (error) => {
@@ -20,7 +22,7 @@ instance.interceptors.request.use(
   }
 );
 
-instance.interceptors.response.use(
+axiosSecure.interceptors.response.use(
   (response) => response,
   async (error) => {
     if (error.response?.status === 401 || error.response?.status === 403) {
@@ -32,4 +34,4 @@ instance.interceptors.response.use(
   }
 );
 
-export default instance;
+export default axiosSecure;

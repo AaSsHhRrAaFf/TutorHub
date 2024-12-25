@@ -1,4 +1,4 @@
-// src/components/dashboard/UpdateModal.jsx
+
 import { useState } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
@@ -15,7 +15,7 @@ const UpdateModal = ({ tutorial, isOpen, onClose, onUpdate }) => {
       e.preventDefault();
       try {
         const response = await axios.put(
-          `http://localhost:5000/api/tutorials/${tutorial._id}`,
+          `${import.meta.env.VITE_API_BASE_URL}/api/tutorials/${tutorial._id}`,
           formData
         );
         onUpdate(response.data);

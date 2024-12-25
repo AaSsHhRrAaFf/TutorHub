@@ -1,5 +1,4 @@
 import React from 'react'
-
 import { useRouteError, Link, useNavigate } from 'react-router-dom';
 import { FaHome, FaArrowLeft } from 'react-icons/fa';
 

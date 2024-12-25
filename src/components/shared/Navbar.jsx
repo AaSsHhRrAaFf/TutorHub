@@ -65,7 +65,14 @@ export default function Navbar() {
               )}
             </ul>
           </div>
-          <Link to="/" className="btn btn-ghost text-xl">
+          <div>
+            <img
+              className="w-16 rounded-2xl"
+              src="/tutorhub.webp"
+              alt="Tutor Hub Logo"
+            />
+          </div>
+          <Link to="/" className="btn btn-ghost font-bold text-3xl">
             Tutor Hub
           </Link>
         </div>

@@ -1,5 +1,4 @@
 import React from "react";
-
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
@@ -12,7 +11,6 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [photoURL, setPhotoURL] = useState("");
   const navigate = useNavigate();
-  /*  const auth = getAuth(); */
   const { signup, signInWithGoogle } = useAuth();
 
   const handleRegister = async (e) => {

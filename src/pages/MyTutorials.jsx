@@ -1,6 +1,5 @@
 import React from "react";import { useState, useEffect } from 'react';
 import { useAuth } from '../hooks/useAuth';
-import axios from 'axios';
 import toast from 'react-hot-toast';
 import Loading from "../components/shared/Loading";
 import axiosSecure from '../utils/axios'; 
@@ -18,12 +17,11 @@ export default function MyTutorials() {
     description: ''
   });
 
-  // Fetch tutorials
   useEffect(() => {
     const fetchTutorials = async () => {
       try {
         setLoading(true);
-        const response = await axiosSecure.get(`http://localhost:5000/api/tutorials/my-tutorials/${user.email}`);
+        const response = await axiosSecure.get(`${import.meta.env.VITE_API_BASE_URL}/api/tutorials/my-tutorials/${user.email}`);
         setTutorials(response.data);
       } catch (error) {
         toast.error('Failed to fetch tutorials');
@@ -38,7 +36,7 @@ export default function MyTutorials() {
   // Handle delete
   const handleDelete = async (id) => {
     try {
-      await axiosSecure.delete(`http://localhost:5000/api/tutorials/${id}`);
+      await axiosSecure.delete(`${import.meta.env.VITE_API_BASE_URL}/api/tutorials/${id}`);
       setTutorials(tutorials.filter(tutorial => tutorial._id !== id));
       toast.success('Tutorial deleted successfully');
     } catch (error) {
@@ -63,7 +61,7 @@ export default function MyTutorials() {
     e.preventDefault();
     try {
       const response = await axiosSecure.put(
-        `http://localhost:5000/api/tutorials/${selectedTutorial._id}`,
+        `${import.meta.env.VITE_API_BASE_URL}/api/tutorials/${selectedTutorial._id}`,
         updateForm
       );
       

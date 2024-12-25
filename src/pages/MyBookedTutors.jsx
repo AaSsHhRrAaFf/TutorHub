@@ -1,8 +1,6 @@
 import React from "react";
-
 import { useState, useEffect } from "react";
 import { useAuth } from "../hooks/useAuth";
-import axios from "axios";
 import toast from "react-hot-toast";
 import { FaStar } from "react-icons/fa";
 import Loading from "../components/shared/Loading";
@@ -19,8 +17,9 @@ export default function MyBookedTutors() {
       try {
         setLoading(true);
         const response = await axiosSecure.get(
-          `http://localhost:5000/api/bookings/${user.email}`
+          `${import.meta.env.VITE_API_BASE_URL}/api/bookings/${user.email}`
         );
+        console.log(response.data);
         setBookedTutors(response.data);
       } catch (error) {
         toast.error("Failed to fetch booked tutors");
@@ -37,10 +36,10 @@ export default function MyBookedTutors() {
   const handleReview = async (tutorId) => {
     try {
       setLoading(true);
-      // Update review count in the database
       await axiosSecure.put(
-        `http://localhost:5000/api/tutors/review/${tutorId}`
+        `${import.meta.env.VITE_API_BASE_URL}/api/tutors/review/${tutorId}`
       );
+     
 
       // Update the local state to reflect the change
       setBookedTutors(
@@ -65,64 +64,6 @@ export default function MyBookedTutors() {
 
   return (
     <>
-      {/* <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8 text-center">My Booked Tutors</h1>
-
-      {bookedTutors.length === 0 ? (
-        <div className="text-center text-gray-500">
-          You haven't booked any tutors yet.
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {bookedTutors.map((tutor) => (
-            <div
-              key={tutor._id}
-              className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
-            >
-              <div className="relative h-48">
-                <img
-                  src={tutor.image}
-                  alt={tutor.name}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute top-0 right-0 bg-blue-500 text-white px-3 py-1 rounded-bl-lg">
-                  ${tutor.price}/hr
-                </div>
-              </div>
-
-              <div className="p-6">
-                <h2 className="text-xl font-semibold mb-2">{tutor.name}</h2>
-
-                <div className="flex items-center mb-3">
-                  <span className="text-gray-600 mr-2">Language:</span>
-                  <span className="font-medium">{tutor.language}</span>
-                </div>
-
-                <div className="flex items-center mb-4">
-                  <FaStar className="text-yellow-400 w-5 h-5 mr-1" />
-                  <span>{tutor.review || 0} reviews</span>
-                </div>
-
-                <button
-                  onClick={() => handleReview(tutor.tutorId)}
-                  className="
-                    w-full px-4 py-2 
-                    bg-gradient-to-r from-purple-500 to-pink-500
-                    hover:from-purple-600 hover:to-pink-600
-                    text-white font-semibold rounded-lg
-                    transform hover:-translate-y-0.5
-                    transition duration-300 ease-in-out
-                    focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50
-                  "
-                >
-                  Submit Review
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-    </div> */}
       <div
         className={`min-h-screen ${
           theme === "dark" ? "bg-gray-900" : "bg-gray-50"
@@ -146,83 +87,56 @@ export default function MyBookedTutors() {
               You haven't booked any tutors yet.
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mx-auto lg:mx-40">
               {bookedTutors.map((tutor) => (
                 <div
                   key={tutor._id}
-                  className={`rounded-xl shadow-lg overflow-hidden transition-all duration-300 ${
+                  className={`max-w-xs rounded-md shadow-md ${
                     theme === "dark"
-                      ? "bg-gray-800 hover:shadow-blue-500/20"
-                      : "bg-white hover:shadow-xl"
+                      ? "bg-gray-900 text-gray-100"
+                      : "bg-gray-50 text-gray-800"
                   }`}
                 >
-                  <div className="relative h-48">
-                    <img
-                      src={tutor.image}
-                      alt={tutor.name}
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute top-0 right-0 bg-blue-500 text-white px-3 py-1 rounded-bl-lg">
-                      ${tutor.price}/hr
-                    </div>
-                  </div>
+                  <img
+                    src={tutor.image}
+                    alt={tutor.name}
+                    className="object-cover object-center w-full rounded-t-md h-72 bg-gray-500"
+                  />
+                  <div className="flex flex-col justify-between p-6 space-y-8">
+                    <div className="space-y-2">
+                      <h2 className="text-3xl font-semibold tracking-wide">
+                        {tutor.name}
+                      </h2>
 
-                  <div className="p-6">
-                    <h2
-                      className={`text-xl font-semibold mb-2 ${
-                        theme === "dark" ? "text-white" : "text-gray-900"
-                      }`}
-                    >
-                      {tutor.name}
-                    </h2>
+                      {/* Language and Price */}
+                      <div className="flex justify-between items-center">
+                        <p
+                          className={
+                            theme === "dark" ? "text-gray-100" : "text-gray-800"
+                          }
+                        >
+                          {tutor.language}
+                        </p>
+                        <span className="text-blue-500 font-semibold">
+                          ${tutor.price}/hr
+                        </span>
+                      </div>
 
-                    <div className="flex items-center mb-3">
-                      <span
-                        className={`mr-2 ${
-                          theme === "dark" ? "text-gray-400" : "text-gray-600"
-                        }`}
-                      >
-                        Language:
-                      </span>
-                      <span
-                        className={`font-medium ${
-                          theme === "dark" ? "text-gray-200" : "text-gray-900"
-                        }`}
-                      >
-                        {tutor.language}
-                      </span>
-                    </div>
-
-                    <div className="flex items-center mb-4">
-                      <FaStar className="text-yellow-400 w-5 h-5 mr-1" />
-                      <span
-                        className={
-                          theme === "dark" ? "text-gray-300" : "text-gray-600"
-                        }
-                      >
-                        {tutor.review || 0} reviews
-                      </span>
+                      {/* Reviews */}
+                      <div className="flex items-center">
+                        <FaStar className="text-yellow-400 w-5 h-5 mr-1" />
+                        <span>{tutor.review || 0} reviews</span>
+                      </div>
                     </div>
 
                     <button
                       onClick={() => handleReview(tutor.tutorId)}
-                      className={`
-                      w-full px-4 py-2 
-                      ${
+                      type="button"
+                      className={`flex items-center justify-center w-full p-3 font-semibold tracking-wide rounded-md ${
                         theme === "dark"
-                          ? "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
-                          : "bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
-                      }
-                      text-white font-semibold rounded-lg
-                      transform hover:-translate-y-0.5
-                      transition duration-300 ease-in-out
-                      focus:outline-none focus:ring-2 focus:ring-opacity-50
-                      ${
-                        theme === "dark"
-                          ? "focus:ring-blue-500"
-                          : "focus:ring-purple-500"
-                      }
-                    `}
+                          ? "bg-violet-600 text-gray-50"
+                          : "bg-violet-400 text-gray-900"
+                      }`}
                     >
                       Submit Review
                     </button>

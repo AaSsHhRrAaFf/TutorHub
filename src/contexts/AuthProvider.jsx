@@ -23,7 +23,7 @@ export default function AuthProvider({ children }) {
    
    const getToken = async (currentUser) => {
     try {
-      const response = await axios.post('http://localhost:5000/jwt', {
+      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/jwt`, {
         email: currentUser.email
       });
       const token = response.data.token;

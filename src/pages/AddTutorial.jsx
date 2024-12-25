@@ -23,11 +23,11 @@ export default function AddTutorial() {
       language: form.language.value,
       price: parseFloat(form.price.value),
       description: form.description.value,
-      review: 0 // default value as required
+      review: 0 
     };
 
     try {
-      const response = await fetch('http://localhost:5000/api/tutorials', {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/tutorials`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
