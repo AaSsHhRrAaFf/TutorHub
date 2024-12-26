@@ -58,4 +58,7 @@ TutorHub is an online language learning platform that connects students with exp
 - CORS
 - Dotenv
 
-
+### Deployment
+- Frontend deployed on Firebase
+- Backend deployed on Vercel
+- Database hosted on MongoDB Atlas
