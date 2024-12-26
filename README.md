@@ -1,7 +1,7 @@
 # TutorHub - Language Exchange Platform
 
 ## Live Site
-[Visit TutorHub](your-live-url-here)
+[Visit TutorHub](https://firease-authentication.web.app)
 
 ## Project Overview
 TutorHub is an online language learning platform that connects students with expert language tutors worldwide. The platform facilitates interactive learning experiences in a friendly atmosphere, making language acquisition more accessible and engaging.
