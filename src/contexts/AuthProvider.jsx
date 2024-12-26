@@ -30,7 +30,7 @@ export default function AuthProvider({ children }) {
       localStorage.setItem('access-token', token);
     } catch (error) {
       console.error('Error getting JWT token:', error);
-      throw error;
+      toast.error('Error getting authentication token');
     }
   };
 

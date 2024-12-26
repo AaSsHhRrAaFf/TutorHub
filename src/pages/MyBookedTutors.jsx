@@ -4,7 +4,7 @@ import { useAuth } from "../hooks/useAuth";
 import toast from "react-hot-toast";
 import { FaStar } from "react-icons/fa";
 import Loading from "../components/shared/Loading";
-import axiosSecure from "../utils/axios";
+import useAxiosSecure from "../utils/axiosSecure";
 import { useTheme } from "../contexts/ThemeProvider";
 
 export default function MyBookedTutors() {
@@ -12,18 +12,21 @@ export default function MyBookedTutors() {
   const [loading, setLoading] = useState(true);
   const { user } = useAuth();
   const { theme } = useTheme();
+  const axiosSecure = useAxiosSecure();
   useEffect(() => {
     const fetchBookedTutors = async () => {
       try {
         setLoading(true);
-        const response = await axiosSecure.get(
+        /*  const response = await axiosSecure.get(
           `${import.meta.env.VITE_API_BASE_URL}/api/bookings/${user.email}`
-        );
+        ); */
+        const response = await axiosSecure.get(`/api/bookings/${user.email}`);
+
         console.log(response.data);
         setBookedTutors(response.data);
       } catch (error) {
-        toast.error("Failed to fetch booked tutors");
-        console.error("Error:", error);
+        console.error("Error fetching bookings:", error);
+        toast.error("Failed to fetch bookings");
       } finally {
         setLoading(false);
       }
@@ -39,7 +42,6 @@ export default function MyBookedTutors() {
       await axiosSecure.put(
         `${import.meta.env.VITE_API_BASE_URL}/api/tutors/review/${tutorId}`
       );
-     
 
       setBookedTutors(
         bookedTutors.map((tutor) => {

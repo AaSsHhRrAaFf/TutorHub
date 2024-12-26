@@ -4,7 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import toast from "react-hot-toast";
 import Loading from "../components/shared/Loading";
-import axiosSecure from "../utils/axios";
+import useAxiosSecure from '../utils/axiosSecure';
 import { useTheme } from "../contexts/ThemeProvider";
 
 export default function TutorDetails() {
@@ -15,14 +15,17 @@ export default function TutorDetails() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { theme } = useTheme();
+  const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
     const fetchTutorDetails = async () => {
       try {
         setLoading(true);
-        const response = await axiosSecure.get(
+      /*   const response = await axiosSecure.get(
           `${import.meta.env.VITE_API_BASE_URL}/api/tutors/details/${id}`
-        );
+        ); */
+        const response = await axiosSecure.get(`/api/tutors/details/${id}`);
+
 
         setTutor(response.data);
       } catch (err) {

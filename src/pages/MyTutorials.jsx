@@ -1,30 +1,38 @@
-import React from "react";import { useState, useEffect } from 'react';
-import { useAuth } from '../hooks/useAuth';
-import toast from 'react-hot-toast';
+import React from "react";
+import { useState, useEffect } from "react";
+import { useAuth } from "../hooks/useAuth";
+import toast from "react-hot-toast";
 import Loading from "../components/shared/Loading";
-import axiosSecure from '../utils/axios'; 
+import useAxiosSecure from "../utils/axiosSecure";
 
 export default function MyTutorials() {
   const { user } = useAuth();
   const [tutorials, setTutorials] = useState([]);
+  const axiosSecure = useAxiosSecure();
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTutorial, setSelectedTutorial] = useState(null);
   const [updateForm, setUpdateForm] = useState({
-    image: '',
-    language: '',
-    price: '',
-    description: ''
+    image: "",
+    language: "",
+    price: "",
+    description: "",
   });
 
   useEffect(() => {
     const fetchTutorials = async () => {
       try {
         setLoading(true);
-        const response = await axiosSecure.get(`${import.meta.env.VITE_API_BASE_URL}/api/tutorials/my-tutorials/${user.email}`);
+
+        /* const response = await axiosSecure.get(`${import.meta.env.VITE_API_BASE_URL}/api/tutorials/my-tutorials/${user.email}`);
+         */
+        const response = await axiosSecure.get(
+          `/api/tutorials/my-tutorials/${user.email}`
+        );
+
         setTutorials(response.data);
       } catch (error) {
-        toast.error('Failed to fetch tutorials');
+        toast.error("Failed to fetch tutorials");
       } finally {
         setLoading(false);
       }
@@ -36,11 +44,13 @@ export default function MyTutorials() {
   // Handle delete
   const handleDelete = async (id) => {
     try {
-      await axiosSecure.delete(`${import.meta.env.VITE_API_BASE_URL}/api/tutorials/${id}`);
-      setTutorials(tutorials.filter(tutorial => tutorial._id !== id));
-      toast.success('Tutorial deleted successfully');
+      await axiosSecure.delete(
+        `${import.meta.env.VITE_API_BASE_URL}/api/tutorials/${id}`
+      );
+      setTutorials(tutorials.filter((tutorial) => tutorial._id !== id));
+      toast.success("Tutorial deleted successfully");
     } catch (error) {
-      toast.error('Failed to delete tutorial');
+      toast.error("Failed to delete tutorial");
     }
   };
 
@@ -51,7 +61,7 @@ export default function MyTutorials() {
       image: tutorial.image,
       language: tutorial.language,
       price: tutorial.price,
-      description: tutorial.description
+      description: tutorial.description,
     });
     setIsModalOpen(true);
   };
@@ -61,18 +71,22 @@ export default function MyTutorials() {
     e.preventDefault();
     try {
       const response = await axiosSecure.put(
-        `${import.meta.env.VITE_API_BASE_URL}/api/tutorials/${selectedTutorial._id}`,
+        `${import.meta.env.VITE_API_BASE_URL}/api/tutorials/${
+          selectedTutorial._id
+        }`,
         updateForm
       );
-      
-      setTutorials(tutorials.map(tutorial => 
-        tutorial._id === selectedTutorial._id ? response.data : tutorial
-      ));
-      
+
+      setTutorials(
+        tutorials.map((tutorial) =>
+          tutorial._id === selectedTutorial._id ? response.data : tutorial
+        )
+      );
+
       setIsModalOpen(false);
-      toast.success('Tutorial updated successfully');
+      toast.success("Tutorial updated successfully");
     } catch (error) {
-      toast.error('Failed to update tutorial');
+      toast.error("Failed to update tutorial");
     }
   };
 
@@ -80,7 +94,7 @@ export default function MyTutorials() {
   return (
     <div className="container mx-auto px-4 py-8">
       <h2 className="text-2xl font-bold mb-6">My Tutorials</h2>
-      
+
       {/* Tutorials Table */}
       <div className="overflow-x-auto">
         <table className="table w-full">
@@ -99,8 +113,8 @@ export default function MyTutorials() {
             {tutorials.map((tutorial) => (
               <tr key={tutorial._id}>
                 <td>
-                  <img 
-                    src={tutorial.image} 
+                  <img
+                    src={tutorial.image}
                     alt={tutorial.name}
                     className="w-16 h-16 object-cover rounded"
                   />
@@ -138,7 +152,9 @@ export default function MyTutorials() {
             <form onSubmit={handleUpdate}>
               {/* Non-editable fields */}
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Name</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Name
+                </label>
                 <input
                   type="text"
                   value={selectedTutorial.name}
@@ -147,7 +163,9 @@ export default function MyTutorials() {
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Email</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Email
+                </label>
                 <input
                   type="email"
                   value={selectedTutorial.email}
@@ -158,40 +176,59 @@ export default function MyTutorials() {
 
               {/* Editable fields */}
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Image URL</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Image URL
+                </label>
                 <input
                   type="url"
                   value={updateForm.image}
-                  onChange={(e) => setUpdateForm({...updateForm, image: e.target.value})}
+                  onChange={(e) =>
+                    setUpdateForm({ ...updateForm, image: e.target.value })
+                  }
                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
                   required
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Language</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Language
+                </label>
                 <input
                   type="text"
                   value={updateForm.language}
-                  onChange={(e) => setUpdateForm({...updateForm, language: e.target.value})}
+                  onChange={(e) =>
+                    setUpdateForm({ ...updateForm, language: e.target.value })
+                  }
                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
                   required
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Price</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Price
+                </label>
                 <input
                   type="number"
                   value={updateForm.price}
-                  onChange={(e) => setUpdateForm({...updateForm, price: e.target.value})}
+                  onChange={(e) =>
+                    setUpdateForm({ ...updateForm, price: e.target.value })
+                  }
                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
                   required
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Description</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Description
+                </label>
                 <textarea
                   value={updateForm.description}
-                  onChange={(e) => setUpdateForm({...updateForm, description: e.target.value})}
+                  onChange={(e) =>
+                    setUpdateForm({
+                      ...updateForm,
+                      description: e.target.value,
+                    })
+                  }
                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
                   rows="3"
                   required
@@ -206,10 +243,7 @@ export default function MyTutorials() {
                 >
                   Cancel
                 </button>
-                <button
-                  type="submit"
-                  className="btn btn-primary"
-                >
+                <button type="submit" className="btn btn-primary">
                   Update
                 </button>
               </div>

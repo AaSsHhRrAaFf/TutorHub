@@ -4,12 +4,13 @@ import { useAuth } from '../hooks/useAuth';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import Loading from '../components/shared/Loading';
-import axiosSecure from '../utils/axios'; 
+import useAxiosSecure from '../utils/axiosSecure';
 
 export default function AddTutorial() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const axiosSecure = useAxiosSecure();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,13 +28,14 @@ export default function AddTutorial() {
     };
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/tutorials`, {
+    /*   const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/tutorials`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(tutorialData),
-      });
+      }); */
+      const response = await axiosSecure.post('/api/tutorials', tutorialData);
 
       if (!response.ok) {
         throw new Error('Failed to add tutorial');
