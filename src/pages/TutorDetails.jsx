@@ -2,7 +2,6 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
-
 import toast from "react-hot-toast";
 import Loading from "../components/shared/Loading";
 import axiosSecure from "../utils/axios";
@@ -46,10 +45,12 @@ export default function TutorDetails() {
         price: tutor.price,
         tutorEmail: tutor.email,
         email: user.email,
-        
       };
 
-      await axiosSecure.post(`${import.meta.env.VITE_API_BASE_URL}/api/bookings`, bookingData);
+      await axiosSecure.post(
+        `${import.meta.env.VITE_API_BASE_URL}/api/bookings`,
+        bookingData
+      );
       toast.success("Booking successful!");
       navigate("/my-booked-tutors");
     } catch (error) {

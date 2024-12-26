@@ -41,6 +41,7 @@ export default function MyBookedTutors() {
       );
      
 
+      // Update the local state to reflect the change
       setBookedTutors(
         bookedTutors.map((tutor) => {
           if (tutor.tutorId === tutorId) {
