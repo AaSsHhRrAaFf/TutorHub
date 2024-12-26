@@ -1,10 +1,10 @@
-import React from 'react'
-import { useState } from 'react';
-import { useAuth } from '../hooks/useAuth';
-import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
-import Loading from '../components/shared/Loading';
-import useAxiosSecure from '../utils/axiosSecure';
+import React from "react";
+import { useState } from "react";
+import { useAuth } from "../hooks/useAuth";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import Loading from "../components/shared/Loading";
+import useAxiosSecure from "../utils/axiosSecure";
 
 export default function AddTutorial() {
   const { user } = useAuth();
@@ -24,26 +24,26 @@ export default function AddTutorial() {
       language: form.language.value,
       price: parseFloat(form.price.value),
       description: form.description.value,
-      review: 0 
+      review: 0,
     };
 
     try {
-    /*   const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/tutorials`, {
+      /*   const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/tutorials`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(tutorialData),
       }); */
-      const response = await axiosSecure.post('/api/tutorials', tutorialData);
+      const response = await axiosSecure.post("/api/tutorials", tutorialData);
 
-      if (!response.ok) {
-        throw new Error('Failed to add tutorial');
+      if (!response.data) {
+        throw new Error("Failed to add tutorial");
       }
 
-      toast.success('Tutorial added successfully!');
+      toast.success("Tutorial added successfully!");
       form.reset();
-      navigate('/my-tutorials');
+      navigate("/my-tutorials");
     } catch (error) {
       toast.error(error.message);
     } finally {
@@ -54,11 +54,13 @@ export default function AddTutorial() {
   return (
     <div className="max-w-2xl mx-auto p-6">
       <h2 className="text-3xl font-bold text-center mb-8">Add New Tutorial</h2>
-      
+
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Name Field - Read Only */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">Name</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Name
+          </label>
           <input
             type="text"
             value={user.displayName}
@@ -69,7 +71,9 @@ export default function AddTutorial() {
 
         {/* Email Field - Read Only */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">Email</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Email
+          </label>
           <input
             type="email"
             value={user.email}
@@ -80,7 +84,9 @@ export default function AddTutorial() {
 
         {/* Image URL Field */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">Image URL</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Image URL
+          </label>
           <input
             type="url"
             name="image"
@@ -91,7 +97,9 @@ export default function AddTutorial() {
 
         {/* Language Field */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">Language</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Language
+          </label>
           <select
             name="language"
             required
@@ -112,7 +120,9 @@ export default function AddTutorial() {
 
         {/* Price Field */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">Price</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Price
+          </label>
           <input
             type="number"
             name="price"
@@ -125,7 +135,9 @@ export default function AddTutorial() {
 
         {/* Description Field */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">Description</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Description
+          </label>
           <textarea
             name="description"
             required
@@ -141,11 +153,10 @@ export default function AddTutorial() {
             disabled={loading}
             className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
           >
-            {loading ? 'Adding Tutorial...' : 'Add Tutorial'}
+            {loading ? "Adding Tutorial..." : "Add Tutorial"}
           </button>
         </div>
       </form>
     </div>
   );
 }
-
