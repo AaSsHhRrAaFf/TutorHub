@@ -1,4 +1,4 @@
-### assignment_category_14
+
 
 # TutorHub - Language Exchange Platform
 
@@ -37,6 +37,14 @@ TutorHub is an online language learning platform that connects students with exp
   - Search functionality
   - Loading states and error handling
 
+
+
+## Screenshot
+![TutorHub Screenshot](path/to/screenshot.png) *(Replace with actual path to screenshot)*
+
+
+
+
 ## Technologies Used
 
 ### Frontend
@@ -60,7 +68,26 @@ TutorHub is an online language learning platform that connects students with exp
 - CORS
 - Dotenv
 
+## Dependencies
+- React
+- React-DOM
+- React-Router-Dom
+- Axios
+- Firebase
+- Tailwind CSS
+- DaisyUI
+- Framer Motion
+- JSON Web Token (JWT)
+
+
 ### Deployment
 - Frontend deployed on Firebase
 - Backend deployed on Vercel
 - Database hosted on MongoDB Atlas
+
+## How to Run the Project Locally
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/yourusername/my-tutor-booking-app.git
+   cd my-tutor-booking-app
+
