@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Search } from "lucide-react"
+import { Search } from "lucide-react";
 import bannerImage from "../../assets/banner02.png";
 
 export default function Banner() {

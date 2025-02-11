@@ -139,7 +139,7 @@ export default function FindTutors() {
         theme === "dark" ? "bg-gray-900" : "bg-gray-50"
       }`}
     >
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8 mt-16">
         <motion.h1
           initial={{ y: -50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -186,7 +186,7 @@ export default function FindTutors() {
         </motion.div>
 
         {/* Tutors Grid */}
-        
+
         <AnimatePresence>
           <motion.div
             variants={containerVariants}
