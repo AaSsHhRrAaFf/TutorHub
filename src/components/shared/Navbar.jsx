@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useTheme } from "../../contexts/ThemeProvider";
 import { FaSun, FaMoon } from "react-icons/fa";
@@ -8,6 +8,7 @@ import { useAuth } from "../../hooks/useAuth";
 export default function Navbar() {
   const { user, logout } = useAuth();
   const { theme, toggleTheme } = useTheme();
+  const [scrolled, setScrolled] = useState(false);
 
   // Handle logout
   const handleLogout = async () => {
@@ -19,9 +20,31 @@ export default function Navbar() {
     }
   };
 
+  // Handle scroll event
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
-    <>
-      <div className="navbar bg-base-100">
+    <div
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+        scrolled
+          ? "bg-indigo-100 bg-opacity-90 backdrop-blur-md"
+          : "bg-transparent"
+      }`}
+    >
+      <div className="navbar container mx-auto px-6 md:px-12 lg:px-28 py-4">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -65,34 +88,27 @@ export default function Navbar() {
               )}
             </ul>
           </div>
-          <div>
-            <img
-              className="w-16 rounded-2xl"
-              src="/tutorhub.webp"
-              alt="Tutor Hub Logo"
-            />
-          </div>
-          <Link to="/" className="btn btn-ghost font-bold text-3xl">
+          <Link to="/" className="text-gray-800 font-bold text-3xl">
             Tutor Hub
           </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
-            <li>
+            <li className=" font-normal text-lg">
               <Link to="/">Home</Link>
             </li>
-            <li>
+            <li className=" font-normal text-lg">
               <Link to="/find-tutors">Find tutors</Link>
             </li>
             {user && (
               <>
-                <li>
+                <li className=" font-normal text-lg">
                   <Link to="/add-tutorials">Add Tutorials</Link>
                 </li>
-                <li>
+                <li className=" font-normal text-lg">
                   <Link to="/my-tutorials">My Tutorials</Link>
                 </li>
-                <li>
+                <li className=" font-normal text-lg">
                   <Link to="/my-booked-tutors">My booked tutors</Link>
                 </li>
               </>
@@ -107,26 +123,15 @@ export default function Navbar() {
             aria-label="Toggle theme"
           >
             {theme === "light" ? (
-              <FaMoon className="h-5 w-5" />
+              <FaMoon className="h-5 w-5 text-indigo-950" />
             ) : (
-              <FaSun className="h-5 w-5" />
+              <FaSun className="h-5 w-5 text-indigo-950" />
             )}
           </button>
           {!user ? (
             <Link
               to="/login"
-              className="
-              inline-block
-              text-lg font-semibold text-white
-              px-6 py-3
-              bg-gradient-to-r from-blue-500 to-indigo-600
-              hover:from-blue-600 hover:to-indigo-700
-              rounded-full
-              shadow-md hover:shadow-lg
-              transform hover:-translate-y-0.5
-              transition duration-300 ease-in-out
-              focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50
-            "
+              className=" text-white px-3 py-1 rounded-2xl text-xl"
             >
               Login
             </Link>
@@ -157,16 +162,7 @@ export default function Navbar() {
                   <button
                     onClick={handleLogout}
                     className="
-    text-white font-semibold
-    px-4 py-2
-    bg-gradient-to-r from-red-500 to-red-600
-    hover:from-red-600 hover:to-red-700
-    rounded-lg
-    shadow-md hover:shadow-lg
-    transform hover:-translate-y-0.5
-    transition duration-300 ease-in-out
-    focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50
-  "
+                      text-white font-semibold px-4 py-2 rounded-lg"
                   >
                     Logout
                   </button>
@@ -176,6 +172,6 @@ export default function Navbar() {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 }
