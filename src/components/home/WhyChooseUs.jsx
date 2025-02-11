@@ -60,39 +60,42 @@ const WhyChooseUs = () => {
           >
             Why Choose Us?
           </h2>
-          <p className={
-            theme === 'dark' ? 'text-gray-300' : 'text-gray-600'
-          }>
+          <p className={theme === "dark" ? "text-gray-300" : "text-gray-600"}>
             Discover why thousands of students choose our platform for their
             language learning journey
           </p>
         </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-4 md:px-8 lg:px-24">
           {features.map((feature, index) => (
             <div
               key={index}
               className={`p-6 rounded-lg transition-all duration-300 transform hover:-translate-y-1 ${
-                theme === 'dark' 
-                  ? 'bg-gray-800 border-gray-700 hover:shadow-blue-500/20' 
-                  : 'bg-white border-gray-200 hover:shadow-xl'
+                theme === "dark"
+                  ? "bg-gray-800 border-gray-700 hover:shadow-blue-500/20"
+                  : "bg-white border-gray-200 hover:shadow-xl"
               }`}
             >
-              <div className={`w-12 h-12 mb-4 rounded-full flex items-center justify-center ${
-                theme === 'dark' ? 'bg-blue-900' : 'bg-blue-100'
-              }`}>
-                <feature.icon className={`w-6 h-6 ${
-                  theme === 'dark' ? 'text-blue-300' : 'text-blue-600'
-                }`}/>
+              <div
+                className={`w-12 h-12 mb-4 rounded-full flex items-center justify-center ${
+                  theme === "dark" ? "bg-blue-900" : "bg-blue-100"
+                }`}
+              >
+                <feature.icon
+                  className={`w-6 h-6 ${
+                    theme === "dark" ? "text-blue-300" : "text-blue-600"
+                  }`}
+                />
               </div>
-              <h3 className={`text-xl font-semibold mb-2 ${
-                theme === 'dark' ? 'text-white' : 'text-gray-900'
-              }`}>
+              <h3
+                className={`text-xl font-semibold mb-2 ${
+                  theme === "dark" ? "text-white" : "text-gray-900"
+                }`}
+              >
                 {feature.title}
               </h3>
-              <p className={
-                theme === 'dark' ? 'text-gray-300' : 'text-gray-600'
-              }>
+              <p
+                className={theme === "dark" ? "text-gray-300" : "text-gray-600"}
+              >
                 {feature.description}
               </p>
             </div>
