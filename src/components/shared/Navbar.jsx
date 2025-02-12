@@ -10,7 +10,7 @@ export default function Navbar() {
   const { theme, toggleTheme } = useTheme();
   const [scrolled, setScrolled] = useState(false);
 
-  // Handle logout
+  // Handle logout function
   const handleLogout = async () => {
     try {
       await logout();
@@ -20,7 +20,7 @@ export default function Navbar() {
     }
   };
 
-  // Handle scroll event
+  // Handle scroll event 
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {
