@@ -71,7 +71,7 @@ export default function TutorDetails() {
   return (
     <>
       <div
-        className={`min-h-screen ${
+        className={`min-h-screen pt-24 md:pt-24 lg:pt-28 ${
           theme === "dark" ? "bg-gray-900" : "bg-gray-50"
         }`}
       >
@@ -148,8 +148,8 @@ export default function TutorDetails() {
                     onClick={handleBooking}
                     className={`mt-6 px-4 py-2 rounded transition-colors ${
                       theme === "dark"
-                        ? "bg-blue-600 hover:bg-blue-700 text-white"
-                        : "bg-indigo-600 hover:bg-indigo-700 text-white"
+                        ? "bg-red-500 hover:bg-red-700 text-white"
+                        : "bg-red-600 hover:bg-red-700 text-white"
                     }`}
                   >
                     Book Now

@@ -35,10 +35,10 @@ const Footer = () => {
                 <Link to="/add-tutorials" className="hover:text-blue-500">Become a Tutor</Link>
               </li>
               <li>
-                <Link to="/about" className="hover:text-blue-500">About Us</Link>
+                <Link to="/" className="hover:text-blue-500">About Us</Link>
               </li>
               <li>
-                <Link to="/contact" className="hover:text-blue-500">Contact</Link>
+                <Link to="/" className="hover:text-blue-500">Contact</Link>
               </li>
             </ul>
           </div>
@@ -79,9 +79,9 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p>&copy; {new Date().getFullYear()} TutorHub. All rights reserved.</p>
             <div className="flex space-x-4 mt-4 md:mt-0">
-              <Link to="/privacy" className="hover:text-blue-500">Privacy Policy</Link>
-              <Link to="/terms" className="hover:text-blue-500">Terms of Service</Link>
-              <Link to="/faq" className="hover:text-blue-500">FAQ</Link>
+              <Link to="/" className="hover:text-blue-500">Privacy Policy</Link>
+              <Link to="/" className="hover:text-blue-500">Terms of Service</Link>
+              <Link to="/" className="hover:text-blue-500">FAQ</Link>
             </div>
           </div>
         </div>
