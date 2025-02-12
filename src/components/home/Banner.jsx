@@ -14,7 +14,7 @@ export default function Banner() {
 
   return (
     <div
-      className={`container px-6 md:px-12 lg:px-28 lg:mt-16 py-12 md:py-24 ${
+      className={`container px-6 pt-28 md:px-12 lg:px-28 lg:pt-44 py-12 md:py-24 ${
         theme === "dark" ? "bg-gray-900" : "bg-white"
       }`}
     >
@@ -62,7 +62,7 @@ export default function Banner() {
           </ul>
           <button
             onClick={handleFindTutor}
-            className="bg-[#D3382F] text-white font-semibold py-3 px-6 rounded-lg flex items-center space-x-2 transition-transform group hover:scale-105"
+            className="bg-red-500 text-white font-semibold py-3 px-6 rounded-lg flex items-center space-x-2 transition-transform group hover:scale-105"
           >
             <Search className="w-5 h-5 transition-transform group-hover:scale-110" />
             <span className="transition-transform group-hover:scale-105">

@@ -139,7 +139,7 @@ export default function FindTutors() {
         theme === "dark" ? "bg-gray-900" : "bg-gray-50"
       }`}
     >
-      <div className="container mx-auto px-4 py-8 mt-16">
+      <div className="container mx-auto px-4 py-8 pt-28">
         <motion.h1
           initial={{ y: -50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -192,7 +192,7 @@ export default function FindTutors() {
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mx-auto lg:mx-40"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:mx-40"
           >
             {currentTutors.map((tutor) => (
               <motion.div
@@ -202,7 +202,7 @@ export default function FindTutors() {
                   scale: 1.03,
                   transition: { duration: 0.2 },
                 }}
-                className={`max-w-xs rounded-md shadow-md ${
+                className={`max-w-xs mx-auto rounded-md shadow-md ${
                   theme === "dark"
                     ? "bg-gray-900 text-gray-100"
                     : "bg-gray-50 text-gray-800"
@@ -257,8 +257,8 @@ export default function FindTutors() {
               font-semibold tracking-wide rounded-md
               ${
                 theme === "dark"
-                  ? "bg-violet-600 text-gray-50"
-                  : "bg-violet-400 text-gray-900"
+                  ? "bg-red-400 text-gray-100"
+                  : "bg-red-500 text-gray-50"
               }`}
                   >
                     View Details

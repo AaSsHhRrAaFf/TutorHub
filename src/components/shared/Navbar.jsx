@@ -38,12 +38,12 @@ export default function Navbar() {
 
   return (
     <div
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0  w-full z-50 transition-all duration-300 ${
         scrolled
           ? theme === "dark"
             ? "bg-gray-800"
             : "bg-indigo-100"
-          : "bg-transparent"
+          : "bg-transparent "
       }`}
     >
       <div className="navbar container mx-auto px-6 md:px-12 lg:px-28 py-4">
@@ -133,7 +133,7 @@ export default function Navbar() {
             to="/"
             className={`${
               theme === "dark" ? "text-white" : "text-gray-900"
-            } font-bold text-3xl`}
+            } font-bold text-2xl lg:text-3xl`}
           >
             Tutor Hub
           </Link>
@@ -217,7 +217,7 @@ export default function Navbar() {
           {!user ? (
             <Link
               to="/login"
-              className="bg-[#FE4D01] text-white px-3 py-1 rounded-2xl text-xl"
+              className="border border-red-500 hover:bg-red-500 text-red-600 hover:text-white px-6 py-2.5   rounded-2xl text-xl"
             >
               Login
             </Link>

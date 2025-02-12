@@ -52,7 +52,7 @@ export default function AddTutorial() {
   };
   if (loading) return <Loading />;
   return (
-    <div className="max-w-2xl mx-auto p-6">
+    <div className="max-w-2xl mt-20 mx-auto p-6">
       <h2 className="text-3xl font-bold text-center mb-8">Add New Tutorial</h2>
 
       <form onSubmit={handleSubmit} className="space-y-6">
@@ -65,7 +65,7 @@ export default function AddTutorial() {
             type="text"
             value={user.displayName}
             disabled
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-50"
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500"
           />
         </div>
 
@@ -78,7 +78,7 @@ export default function AddTutorial() {
             type="email"
             value={user.email}
             disabled
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-50"
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500"
           />
         </div>
 
@@ -91,7 +91,7 @@ export default function AddTutorial() {
             type="url"
             name="image"
             required
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500"
           />
         </div>
 
@@ -103,7 +103,7 @@ export default function AddTutorial() {
           <select
             name="language"
             required
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500"
           >
             <option value="">Select a language</option>
             <option value="English">English</option>
@@ -129,7 +129,7 @@ export default function AddTutorial() {
             required
             min="0"
             step="0.01"
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500"
           />
         </div>
 
@@ -142,7 +142,7 @@ export default function AddTutorial() {
             name="description"
             required
             rows="4"
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500"
           ></textarea>
         </div>
 
@@ -151,7 +151,7 @@ export default function AddTutorial() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
+            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50"
           >
             {loading ? "Adding Tutorial..." : "Add Tutorial"}
           </button>

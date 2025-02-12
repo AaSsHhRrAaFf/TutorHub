@@ -13,7 +13,7 @@ const Pagination = ({ totalItems, itemsPerPage, currentPage, onPageChange }) => 
           className={`px-4 py-2 rounded-md ${
             currentPage === 1
               ? 'bg-gray-300 cursor-not-allowed'
-              : 'bg-blue-500 hover:bg-blue-600 text-white'
+              : 'bg-red-500 hover:bg-red-600 text-white'
           }`}
         >
           Previous
@@ -25,7 +25,7 @@ const Pagination = ({ totalItems, itemsPerPage, currentPage, onPageChange }) => 
             onClick={() => onPageChange(index + 1)}
             className={`px-4 py-2 rounded-md ${
               currentPage === index + 1
-                ? 'bg-blue-500 text-white'
+                ? 'bg-red-500 text-white'
                 : 'bg-gray-200 hover:bg-gray-300'
             }`}
           >
@@ -39,7 +39,7 @@ const Pagination = ({ totalItems, itemsPerPage, currentPage, onPageChange }) => 
           className={`px-4 py-2 rounded-md ${
             currentPage === totalPages
               ? 'bg-gray-300 cursor-not-allowed'
-              : 'bg-blue-500 hover:bg-blue-600 text-white'
+              : 'bg-red-500 hover:bg-red-600 text-white'
           }`}
         >
           Next

@@ -66,7 +66,7 @@ export default function MyBookedTutors() {
   return (
     <>
       <div
-        className={`min-h-screen ${
+        className={`min-h-screen pt-24 ${
           theme === "dark" ? "bg-gray-900" : "bg-gray-50"
         }`}
       >
@@ -92,7 +92,7 @@ export default function MyBookedTutors() {
               {bookedTutors.map((tutor) => (
                 <div
                   key={tutor._id}
-                  className={`max-w-xs rounded-md shadow-md ${
+                  className={`max-w-xs mx-auto rounded-md shadow-md ${
                     theme === "dark"
                       ? "bg-gray-900 text-gray-100"
                       : "bg-gray-50 text-gray-800"
@@ -135,8 +135,8 @@ export default function MyBookedTutors() {
                       type="button"
                       className={`flex items-center justify-center w-full p-3 font-semibold tracking-wide rounded-md ${
                         theme === "dark"
-                          ? "bg-violet-600 text-gray-50"
-                          : "bg-violet-400 text-gray-900"
+                          ? "bg-red-600 text-gray-50"
+                          : "bg-red-400 text-gray-900"
                       }`}
                     >
                       Submit Review
